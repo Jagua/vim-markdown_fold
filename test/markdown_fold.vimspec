@@ -1,0 +1,70 @@
+Describe markdown_fold
+  It should be available when compiled with the +folding feature
+    call g:Expect(has('folding')).to_be_true
+  End
+End
+
+
+Describe markdown_fold#foldlevel({lnum})
+  function! s:test(markdown_files) abort
+    for markdown_file in a:markdown_files
+      let foldlevel_file = fnamemodify(markdown_file, ':p:.:s?\.md$?\.fd?')
+      new `=markdown_file`
+      let actual = map(range(1, line('$')), 'markdown_fold#foldlevel(v:val)')
+      let expected = readfile(foldlevel_file)
+      call g:Expect(actual).to_equal(expected)
+      bdelete!
+    endfor
+  endfunction
+
+  Before all
+    let g:markdown_folding = 1
+  End
+
+  Context (H1,2: # ##)
+    It should return a foldlevel of line {lnum}
+      call s:test(glob('test/fixtures/0*.md', 1, 1))
+    End
+  End
+
+  Context (H1,2: = -)
+    It should return a foldlevel of line {lnum}
+      call s:test(glob('test/fixtures/1*.md', 1, 1))
+    End
+  End
+End
+
+
+Describe markdown_fold#headings()
+  It should return a list of dictionary with all headings
+    new
+    setlocal filetype=markdown
+    put = ['# H1', 'H2', '--']
+    1 delete _
+    call g:Expect(markdown_fold#headings()).to_equal([
+          \ {'lnum' : 1, 'word' : '# H1'},
+          \ {'lnum' : 2, 'word' : 'H2'},
+          \])
+    bdelete!
+  End
+End
+
+
+Describe markdown_fold#qfexpr()
+  Before all
+    let g:markdown_folding = 1
+  End
+
+  It should return a list to use in quickfix with all headings
+    let markdown_files = glob('test/fixtures/*.md', 1, 1)
+    for markdown_file in markdown_files
+      let quickfix_file = fnamemodify(markdown_file, ':p:.:s?\.md$?\.qf?')
+      new `=markdown_file`
+      let actual = markdown_fold#qfexpr()
+      let expected = readfile(quickfix_file)
+      echo [actual, expected]
+      call g:Expect(actual).to_equal(expected)
+      bdelete!
+    endfor
+  End
+End

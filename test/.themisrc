@@ -1,0 +1,13 @@
+let g:Expect = themis#helper('expect')
+call themis#helper('command').with(themis#helper('assert')).with({'Expect' : g:Expect})
+call themis#option('reporter', 'tap')
+
+
+if !empty($PROFILE_LOG)
+  profile start $PROFILE_LOG
+  profile! file after/*
+endif
+
+
+syntax enable
+filetype plugin on

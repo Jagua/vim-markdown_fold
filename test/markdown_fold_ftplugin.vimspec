@@ -1,0 +1,71 @@
+Describe markdown_fold
+  Before all
+    let g:markdown_folding = 1
+  End
+
+  Before each
+    new
+    setlocal filetype=markdown
+  End
+
+  After each
+    close
+  End
+
+  It should set &foldmethod to 'expr' if filetype is 'markdown'
+    call g:Expect(&foldmethod).to_equal('expr')
+  End
+
+  It should set &foldexpr to 'markdown_fold#expr()' if filetype is 'markdown'
+    call g:Expect(&foldexpr).to_equal('markdown_fold#expr()')
+  End
+End
+
+
+Describe b:undo_ftplugin
+  Before all
+    let g:markdown_folding = 1
+  End
+
+  Before each
+    new
+  End
+
+  After each
+    close
+  End
+
+  It should be used to undo settings when filetype is changed
+    setlocal filetype=text
+    setglobal foldmethod=syntax
+    setlocal foldmethod=marker
+    unlet! b:undo_ftplugin
+    call g:Expect(&foldexpr).not.to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('marker')
+
+    setlocal filetype=markdown
+    call g:Expect(&foldexpr).to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('expr')
+
+    setlocal filetype=text
+    call g:Expect(&foldexpr).not.to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('syntax')
+  End
+
+  It should be used to undo settings when filetype is changed
+    setlocal filetype=text
+    setglobal foldmethod=syntax
+    setlocal foldmethod=marker
+    let b:undo_ftplugin = 'setl fdm<'
+    call g:Expect(&foldexpr).not.to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('marker')
+
+    setlocal filetype=markdown
+    call g:Expect(&foldexpr).to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('expr')
+
+    setlocal filetype=text
+    call g:Expect(&foldexpr).not.to_equal('markdown_fold#expr()')
+    call g:Expect(&foldmethod).to_equal('syntax')
+  End
+End

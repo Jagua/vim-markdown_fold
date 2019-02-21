@@ -1,0 +1,131 @@
+*markdown_fold.txt*  markdown_fold
+
+Version: 0.1.1
+Author: Jagua
+License: MIT License
+
+
+
+==============================================================================
+INTRODUCTION                                      *markdown_fold-introduction*
+
+*markdown_fold* is able to fold headings in Markdown.
+
+
+
+Requirements:
+- Vim (+folding)
+
+Latest version:
+https://github.com/Jagua/vim-markdown_fold
+
+
+
+==============================================================================
+INTERFACE                                            *markdown_fold-interface*
+
+------------------------------------------------------------------------------
+VARIABLES                                            *markdown_fold-variables*
+
+
+The following variables are not this plugin's, but are used in Vim standard
+configurations.
+
+g:markdown_folding~
+                If this variable exists, folding is enabled in Markdown,
+                otherwise disabled.
+
+                See $VIMRUNTIME/ftplugin/markdown.vim
+
+g:markdown_fenced_languages~
+                A |List| of fenced language names.
+
+                In Markdown, if you want to enable syntax highlighting of
+                other languages, specify those names.
+
+                See |markdown_fold-example-vimrc| and
+                $VIMRUNTIME/syntax/markdown.vim
+
+------------------------------------------------------------------------------
+FUNCTIONS                                            *markdown_fold-functions*
+
+
+markdown_fold#expr()                                    *markdown_fold#expr()*
+                Be used for |foldexpr|.
+
+
+markdown_fold#foldlevel({lnum})                    *markdown_fold#foldlevel()*
+                Return a fold level at {lnum} line.
+                The fold level is not |Number|, but |String| according to
+                |fold-expr| format.
+
+
+markdown_fold#qfexpr()                                *markdown_fold#qfexpr()*
+                Useful for |lgetexpr|.
+
+                See |markdown_fold-example-markdown_fold#qfexpr()|
+
+
+markdown_fold#headings()                            *markdown_fold#headings()*
+                Return a |List| of headings in Markdown.
+
+
+==============================================================================
+EXAMPLES                                              *markdown_fold-examples*
+
+
+                                                 *markdown_fold-example-vimrc*
+        If you want to enable markdown_fold, define |g:markdown_folding| like
+        the following.
+
+        .vimrc
+
+>
+        let g:markdown_folding = 1
+        let g:markdown_fenced_languages = [
+              \  'css',
+              \  'erb=eruby',
+              \  'go',
+              \  'haskell',
+              \  'javascript',
+              \  'js=javascript',
+              \  'json=javascript',
+              \  'python',
+              \  'ruby',
+              \  'sass',
+              \  'sh',
+              \  'vim',
+              \  'xml',
+              \]
+<
+
+                                *markdown_fold-example-markdown_fold#qfexpr()*
+
+        Print a table of contents of current buffer in |location-list|.
+>
+        lgetexpr markdown_fold#qfexpr() | lopen
+<
+
+        A command to do the above.
+
+        A command in order to print a table of contents of current buffer
+        in |location-list|.
+
+>
+        command! -nargs=0 TOC lgetexpr markdown_fold#qfexpr() | lopen
+<
+
+
+==============================================================================
+CHANGELOG                                            *markdown_fold-changelog*
+
+0.1.1   2019-02-22
+        - Upload to GitHub.
+
+0.1.0   2018-11-07
+        - Initial version.
+
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:et:norl:fen:fdl=0:

@@ -1,0 +1,3 @@
+# vim-markdown_fold
+
+**vim-markdown_fold** is a Vim plugin to fold Markdown.

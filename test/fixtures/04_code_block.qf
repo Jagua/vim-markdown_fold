@@ -1,0 +1,3 @@
+test/fixtures/04_code_block.md:1:..# H1
+test/fixtures/04_code_block.md:4:..## Ruby
+test/fixtures/04_code_block.md:12:.## Markdown
