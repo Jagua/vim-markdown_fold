@@ -1,3 +1,6 @@
 # vim-markdown_fold
 
+[![Build Status](https://travis-ci.org/Jagua/vim-markdown_fold.svg?branch=master)](https://travis-ci.org/Jagua/vim-markdown_fold)
+[![codecov](https://codecov.io/gh/Jagua/vim-markdown_fold/branch/master/graph/badge.svg)](https://codecov.io/gh/Jagua/vim-markdown_fold)
+
 **vim-markdown_fold** is a Vim plugin to fold Markdown.
