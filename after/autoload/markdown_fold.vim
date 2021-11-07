@@ -15,7 +15,7 @@ endfunction
 function! markdown_fold#foldlevel(lnum) abort
   let group_names = map(synstack(a:lnum, 1), 'synIDattr(v:val, "name")')
   let group_name = get(group_names, 0, '')
-  let level = matchstr(group_name, '^\C\%(htmlH\|markdownH\)\zs[[:digit:]]\+\ze')
+  let level = matchstr(group_name, '^\C\%(htmlH\|markdownH\)\zs[[:digit:]]\ze')
   if empty(level)
     return '='
   endif
