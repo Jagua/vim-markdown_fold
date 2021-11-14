@@ -1,5 +1,5 @@
 let g:Expect = themis#helper('expect')
-call themis#helper('command').with(themis#helper('assert')).with({'Expect' : g:Expect})
+call themis#helper('command').with(themis#helper('assert'))
 call themis#option('reporter', 'tap')
 
 

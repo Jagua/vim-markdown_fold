@@ -3,12 +3,24 @@ Describe markdown_fold
     let g:markdown_folding = 1
   End
 
+  After all
+    unlet g:markdown_folding
+  End
+
   Before each
+    if !has('folding')
+      Skip only available when compiled with the +folding feature
+    endif
+
     new
     setlocal filetype=markdown
   End
 
   After each
+    if !has('folding')
+      return
+    endif
+
     close
   End
 
@@ -27,11 +39,23 @@ Describe b:undo_ftplugin
     let g:markdown_folding = 1
   End
 
+  After all
+    unlet g:markdown_folding
+  End
+
   Before each
+    if !has('folding')
+      Skip only available when compiled with the +folding feature
+    endif
+
     new
   End
 
   After each
+    if !has('folding')
+      return
+    endif
+
     close
   End
 

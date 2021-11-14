@@ -1,10 +1,3 @@
-Describe markdown_fold
-  It should be available when compiled with the +folding feature
-    call g:Expect(has('folding')).to_be_true
-  End
-End
-
-
 Describe markdown_fold#foldlevel({lnum})
   function! s:test(markdown_files) abort
     for markdown_file in a:markdown_files
@@ -16,10 +9,6 @@ Describe markdown_fold#foldlevel({lnum})
       bdelete!
     endfor
   endfunction
-
-  Before all
-    let g:markdown_folding = 1
-  End
 
   Context (H1,2: # ##)
     It should return a foldlevel of line {lnum}
@@ -51,10 +40,6 @@ End
 
 
 Describe markdown_fold#qfexpr()
-  Before all
-    let g:markdown_folding = 1
-  End
-
   It should return a list to use in quickfix with all headings
     let markdown_files = glob('test/fixtures/*.md', 1, 1)
     for markdown_file in markdown_files
@@ -62,7 +47,6 @@ Describe markdown_fold#qfexpr()
       new `=markdown_file`
       let actual = markdown_fold#qfexpr()
       let expected = readfile(quickfix_file)
-      echo [actual, expected]
       call g:Expect(actual).to_equal(expected)
       bdelete!
     endfor
